@@ -1,0 +1,19 @@
+{
+  "languages": [
+    {
+      "languageId": "promql",
+      "scopes": ["source.promql"],
+      "syntaxes": [
+        "Packages/LSP-promql/promql.sublime-syntax",
+      ],
+    }
+  ],
+  "env": {
+    "LANGSERVER_PROMETHEUSURL": "http://localhost:9090",
+  },
+  "settings": {
+    "promql": {
+      "command": ["promql-langserver"],
+    }
+  }
+}

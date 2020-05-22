@@ -1,0 +1,77 @@
+%YAML 1.2
+---
+name: promql
+file_extensions:
+  - promql
+scope: source.promql
+variables:
+  metric: '[a-zA-Z_-]+'
+  labelKey: '[a-zA-Z0-9_-]+'
+contexts:
+  prototype:
+    - include: comments
+
+  main:
+    - include: functions
+    - include: operators
+    - include: numbers
+    - include: selectors
+
+  functions:
+    - match: '\b(sum|min|max|avg|stddev|stdvar|count|count_values|quantile|topk|bottomk|sum_over_time|min_over_time|max_over_time|avg_over_time|stddev_over_time|stdvar_over_time|count_over_time|abs|absent|absent_over_time|ceil|changes|clamp_max|clamp_min|day_of_month|day_of_week|days_in_month|delta|deriv|exp|floor|histogram_quantile|holt_winters|hour|idelta|increase|irate|label_join|label_replace|ln|log2|log10|minute|month|predict_linear|rate|resets|round|scalar|sort|sort_desc|sqrt|time|timestamp|vector|year)\b'
+      scope: entity.name.function.promql
+
+  operators:
+    - match: '(?:[/%\^*+-])|(?:\b(and|or|unless|bool)\b)'
+      scope: keyword.operator.promql
+
+    - match: '\b(on|ignoring|group_left|group_right|by|without)\b'
+      scope: keyword.operator.promql
+
+  numbers:
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.promql
+
+  selectors:
+    - match: '({{metric}})\{'
+      captures:
+        1: entity.name.constant.promql
+      push:
+        - label_matcher
+        - offset_modifier
+
+  label_matcher:
+    - match: '({{labelKey}})(=|!=|=~|!~)'
+      captures:
+        1: entity.name.label.promql
+        2: keyword.operator.promql
+      push: strings
+
+  offset_modifier:
+    - match: '\}(\[\d+(s|m|h|d|w|y)\])?'
+      captures:
+        1: entity.name.tag.promql
+      pop: true
+
+  strings:
+    - match: "(\"|')"
+      scope: punctuation.definition.string.begin.promql
+      push: inside_string
+
+  inside_string:
+    - meta_include_prototype: false
+    - meta_scope: string.quoted.double.promql
+    - match: '\.'
+      scope: constant.character.escape.promql
+    - match: "(\"|')"
+      scope: punctuation.definition.string.end.promql
+      pop: true
+
+  comments:
+    - match: '#'
+      scope: punctuation.definition.comment.promql
+      push:
+        # This is an anonymous context push for brevity.
+        - meta_scope: comment.line.number-sign.promql
+        - match: $\n?
+          pop: true
