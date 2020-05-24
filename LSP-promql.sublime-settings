@@ -12,8 +12,5 @@
     "LANGSERVER_PROMETHEUSURL": "http://localhost:9090",
   },
   "settings": {
-    "promql": {
-      "command": ["promql-langserver"],
-    }
   }
 }
