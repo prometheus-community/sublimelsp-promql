@@ -1,12 +1,15 @@
 {
   "languages": [
     {
+      "languageId": "yaml",
+      "scopes": ["source.yaml string.unquoted"],
+      "syntaxes": ["Packages/YAML/YAML.sublime-syntax"],
+    },
+    {
       "languageId": "promql",
       "scopes": ["source.promql"],
-      "syntaxes": [
-        "Packages/LSP-promql/promql.sublime-syntax",
-      ],
-    }
+      "syntaxes": ["Packages/LSP-promql/promql.sublime-syntax"],
+    },
   ],
   "env": {
     "LANGSERVER_PROMETHEUSURL": "http://localhost:9090",
