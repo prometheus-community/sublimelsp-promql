@@ -4,29 +4,18 @@ PromQL support for Sublime LSP plugin, using [promql-langserver](https://github.
 
 ## Usage
 
-![movie](https://github.com/nevill/LSP-promql/raw/master/screenshots/yaml.gif)
+![movie](https://github.com/nevill/LSP-promql/raw/master/screenshots/promql.gif)
 
 
 ## Installation
 
-1. Put `promql-langserver` binary under your $PATH.
-```bash
-git clone https://github.com/prometheus-community/promql-langserver
-
-cd promql-langserver
-
-# have GO installed
-go build ./cmd/...
-
-cp promql-langserver <One of your $PATH>
-```
-2. Install package `LSP`, `LSP-promql` via `package control`.
-3. Start editing .promql file.
-
+1. Install `LSP-promql` via package control.
+2. It will download binary `promql-langserver` automatically.
+3. Restart Sublime Text.
 
 ## Settings
 
-* Set Prometheus server via `env.LANGSERVER_PROMETHEUSURL`
+* Set Prometheus server via `env.LANGSERVER_PROMETHEUSURL` in Packages Settings -> LSP -> Servers -> LSP-promql
 ```json
 {
   "env": {
