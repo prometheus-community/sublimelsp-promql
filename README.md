@@ -4,7 +4,7 @@ PromQL support for Sublime LSP plugin, using [promql-langserver](https://github.
 
 ## Usage
 
-![movie](https://github.com/nevill/LSP-promql/raw/master/screenshots/promql.gif)
+![movie](https://github.com/prometheus-community/sublimelsp-promql/raw/master/screenshots/promql.gif)
 
 
 ## Installation
