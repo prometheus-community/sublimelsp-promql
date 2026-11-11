@@ -4,7 +4,7 @@ import shutil
 import sublime
 import tarfile
 from threading import Thread
-from urllib.request import FancyURLopener
+from urllib.request import urlcleanup, urlretrieve
 from sublime_lib import ActivityIndicator
 from LSP.plugin.core.handlers import LanguageHandler
 from LSP.plugin.core.settings import ClientConfig, read_client_config
@@ -98,12 +98,11 @@ class ServerResource:
 
                 with ActivityIndicator(target, label):
                     try:
-                        opener = FancyURLopener()
-                        tmp_file, _ = opener.retrieve(url)
+                        tmp_file, _ = urlretrieve(url)
 
                         if not checksum_verified(checksum, tmp_file):
                             debug('Checksum error.')
-                            sublime.status_message('Server binary', os.path.basename(tmp_file), 'checkusm error.')
+                            sublime.status_message('Server binary {} checksum error.'.format(os.path.basename(tmp_file)))
                             return
 
                         # extract and copy the cache
@@ -116,7 +115,7 @@ class ServerResource:
                     except Exception as ex:
                         debug('Failed downloading server:', ex)
                     finally:
-                        opener.close()
+                        urlcleanup()
 
             thread = Thread(target=_download)
             thread.start()
